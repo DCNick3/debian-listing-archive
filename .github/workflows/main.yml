@@ -41,6 +41,7 @@ jobs:
           regexp: ".*"
           release_name: "${{env.TAG}}"
           tag_name: "${{env.TAG}}"
+          body: "Debian indices at ${{env.TAG}}"
           regexp_options: "us"
           draft: false
           prerelease: false
