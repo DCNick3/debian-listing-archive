@@ -18,7 +18,14 @@ jobs:
       - name: Update the debian listing
         run: python3 update.py
       - name: Check if it changed
-        run: if [[ `git status --porcelain hashes.txt` ]]; then CHANGED=1; echo "Changes detected; will need to commit & release"; else CHANGED=0; echo "No changes detected"; fi
+        run: |
+          if [[ `git status --porcelain hashes.txt` ]]; then 
+            echo "CHANGED=1" >> $GITHUB_ENV
+            echo "Changes detected; will need to commit & release"
+          else
+            echo "CHANGED=0" >> $GITHUB_ENV
+            echo "No changes detected"
+          fi
       
       - uses: EndBug/add-and-commit@v7
         with:
