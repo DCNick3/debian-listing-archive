@@ -17,11 +17,13 @@ jobs:
         run: pip3 install tqdm
       - name: Update the debian listing
         run: python3 update.py
-      - name: Check if it changed
+      - name: Check if stuff is changed
         run: |
           if [[ `git status --porcelain hashes.txt` ]]; then 
             echo "CHANGED=1" >> $GITHUB_ENV
-            echo "Changes detected; will need to commit & release"
+            TAG="$(date +"%Y-%M-%dT%H%m%S")"
+            echo "TAG=$TAG" >> $GITHUB_ENV
+            echo "Changes detected; will need to commit & release as tag $TAG"
           else
             echo "CHANGED=0" >> $GITHUB_ENV
             echo "No changes detected"
