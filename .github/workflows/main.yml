@@ -28,7 +28,7 @@ jobs:
         run: |
           if [[ `git status --porcelain hashes.txt` ]]; then 
             echo "CHANGED=1" >> $GITHUB_ENV
-            TAG="$(date +"%Y-%M-%dT%H%m%S")"
+            TAG="$(date +"%Y-%m-%dT%H%M%S")"
             echo "TAG=$TAG" >> $GITHUB_ENV
             echo "Changes detected; will need to commit & release as tag $TAG"
           else
