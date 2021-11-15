@@ -148,6 +148,6 @@ else:
 print("Hashing...")
 
 with open("hashes.txt", 'w') as f:
-    for file in LOCAL_PATH.iterdir():
+    for file in sorted(LOCAL_PATH.iterdir()):
         hash = hash_file(file)
         f.write(f"{file.name} {hash}\n")
