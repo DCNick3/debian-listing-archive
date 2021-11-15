@@ -46,7 +46,9 @@ jobs:
       - name: Release
         uses: softprops/action-gh-release@v1      
         with:
-          files: "debian/*.xz"
+          files: |
+            debian/*.xz
+            hashes.txt
           tag_name: '${{env.TAG}}'
         if: ${{env.CHANGED == 1}}
 
