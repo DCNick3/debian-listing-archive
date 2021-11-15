@@ -46,4 +46,5 @@ jobs:
         with:
           files: "debian/*.xz"
           tag_name: '${{env.TAG}}'
+        if: ${{env.CHANGED == 1}}
 
