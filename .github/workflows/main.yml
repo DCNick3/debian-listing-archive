@@ -16,6 +16,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: debian
+          key: debian
 
       - name: Install python dependencies
         run: pip3 install tqdm
