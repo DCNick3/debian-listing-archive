@@ -25,14 +25,14 @@ jobs:
       - name: Update the debian listing
         run: python3 update.py
       - name: Check if it changed
-        run: if [[ `git status --porcelain hashes.txt` ]]; then CHANGED=1; else CHANGED=0; fi
+        run: if [[ `git status --porcelain hashes.txt` ]]; then CHANGED=1; echo "Changes detected; will need to commit & release"; else CHANGED=0; echo "No changes detected"; fi
       
       - uses: EndBug/add-and-commit@v7
         with:
           add: 'hashes.txt'
           message: 'Your commit message'
           pathspec_error_handling: exitImmediately
-        if: '${{env.CHANGED == 1}}'
+        if: '${{env.CHANGED == "1"}}'
       
       - uses: ChanTsune/release-with-commit@v2.3.0
         with:
@@ -41,6 +41,6 @@ jobs:
           tag_name: "${{env.TAG}}"
           draft: false
           prerelease: false
-        if: '${{env.CHANGED == 1}}'
+        if: '${{env.CHANGED == "1"}}'
         env:
           GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
