@@ -32,7 +32,7 @@ jobs:
       - uses: EndBug/add-and-commit@v7
         with:
           add: 'hashes.txt'
-          message: 'Your commit message'
+          message: 'Bump hashes.txt to ${{env.TAG}}'
           pathspec_error_handling: exitImmediately
         if: ${{env.CHANGED == 1}}
       
@@ -41,6 +41,7 @@ jobs:
           regexp: ".*"
           release_name: "${{env.TAG}}"
           tag_name: "${{env.TAG}}"
+          regexp_options: "us"
           draft: false
           prerelease: false
         if: ${{env.CHANGED == 1}}
