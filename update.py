@@ -145,4 +145,9 @@ if tasks:
 else:
     print("Up to date!")
 
+print("Hashing...")
 
+with open("hashes.txt", 'w') as f:
+    for file in LOCAL_PATH.iterdir():
+        hash = hash_file(file)
+        f.write(f"{file.name} {hash}\n")

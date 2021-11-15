@@ -24,8 +24,6 @@ jobs:
         run: pip3 install tqdm
       - name: Update the debian listing
         run: python3 update.py
-      - name: Hash the indices
-        run: sha265sum debian/* > hashes.txt
       - name: Check if it changed
         run: if [[ `git status --porcelain hashes.txt` ]]; then CHANGED=1; else CHANGED=0; fi
       
