@@ -33,18 +33,12 @@ jobs:
         with:
           add: 'hashes.txt'
           message: 'Bump hashes.txt to ${{env.TAG}}'
+          tag: '${{env.TAG}}'
           pathspec_error_handling: exitImmediately
         if: ${{env.CHANGED == 1}}
-      
-      - uses: ChanTsune/release-with-commit@v2.3.0
+      - name: Release
+        uses: softprops/action-gh-release@v1      
         with:
-          regexp: ".*"
-          release_name: "${{env.TAG}}"
-          tag_name: "${{env.TAG}}"
-          body: "Debian indices at ${{env.TAG}}"
-          regexp_options: "us"
-          draft: false
-          prerelease: false
-        if: ${{env.CHANGED == 1}}
-        env:
-          GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
+          files: "debian/*.xz"
+          tag_name: '${{env.TAG}}'
+
