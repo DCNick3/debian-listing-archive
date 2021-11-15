@@ -1,0 +1,46 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Update the debian listing
+        run: python3 update.py
+      - name: Hash the indices
+        run: sha265sum debian/* > hashes.txt
+      - name: Check if it changed
+        run: if [[ `git status --porcelain hashes.txt` ]]; then CHANGED=1; else CHANGED=0; fi
+      
+      - uses: EndBug/add-and-commit@v7
+        with:
+          add: 'hashes.txt'
+          message: 'Your commit message'
+          pathspec_error_handling: exitImmediately
+        if: '${{env.CHANGED == 1}}'
+      
+      - uses: ChanTsune/release-with-commit@v2.3.0
+        with:
+          regexp: ".*"
+          release_name: "${{env.TAG}}"
+          tag_name: "${{env.TAG}}"
+          draft: false
+          prerelease: false
+        if: '${{env.CHANGED == 1}}'
+        env:
+          GITHUB_TOKEN: '${{secrets.GITHUB_TOKEN}}'
