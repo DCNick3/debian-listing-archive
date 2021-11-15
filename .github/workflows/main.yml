@@ -20,6 +20,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Install python dependencies
+        run: pip3 install tqdm
       - name: Update the debian listing
         run: python3 update.py
       - name: Hash the indices
