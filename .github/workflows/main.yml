@@ -13,9 +13,9 @@ jobs:
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Cache debian indices
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: debian
           key: debian
@@ -44,7 +44,7 @@ jobs:
           pathspec_error_handling: exitImmediately
         if: ${{env.CHANGED == 1}}
       - name: Release
-        uses: softprops/action-gh-release@v1      
+        uses: softprops/action-gh-release@v1
         with:
           files: |
             debian/*.xz
